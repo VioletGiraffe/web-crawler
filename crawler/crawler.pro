@@ -34,12 +34,14 @@ RCC_DIR     = ../build/$${OUTPUT_DIR}/$${TARGET}
 INCLUDEPATH += \
 	$$PWD/src/ \
 	../cpputils \
-	../cpp-template-utils
+	../cpp-template-utils \
+	$${VCPKG_INSTALLS_PATH}/include
 
 LIBS += -L../bin/$${OUTPUT_DIR} -lcpputils
 
 Debug:LIBS += -L$${VCPKG_INSTALLS_PATH}/Debug/lib
 Release:LIBS += -L$${VCPKG_INSTALLS_PATH}/lib
+LIBS += -lcpr
 
 win*{
 	QMAKE_CXXFLAGS += /MP /wd4251
