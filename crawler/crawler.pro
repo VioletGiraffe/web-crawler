@@ -2,18 +2,14 @@ TEMPLATE = app
 TARGET   = web-crawler
 
 CONFIG += console
-CONFIG -= qt
 CONFIG += c++14
+
+QT = core
 
 mac* | linux*{
 	CONFIG(release, debug|release):CONFIG += Release
 	CONFIG(debug, debug|release):CONFIG += Debug
 }
-
-exists(../local_settings.pri){
-	include(../local_settings.pri)
-}
-
 
 contains(QT_ARCH, x86_64) {
 	ARCHITECTURE = x64
@@ -21,6 +17,9 @@ contains(QT_ARCH, x86_64) {
 	ARCHITECTURE = x86
 }
 
+exists(../local_settings.pri){
+	include(../local_settings.pri)
+}
 
 Release:OUTPUT_DIR=release/$${ARCHITECTURE}
 Debug:OUTPUT_DIR=debug/$${ARCHITECTURE}
@@ -35,13 +34,14 @@ INCLUDEPATH += \
 	$$PWD/src/ \
 	../cpputils \
 	../cpp-template-utils \
+	../libcurl-cpp/src \
 	$${VCPKG_INSTALLS_PATH}/include
 
-LIBS += -L../bin/$${OUTPUT_DIR} -lcpputils
+LIBS += -L../bin/$${OUTPUT_DIR} -lcurl_cpp -lcpputils
 
 Debug:LIBS += -L$${VCPKG_INSTALLS_PATH}/Debug/lib
 Release:LIBS += -L$${VCPKG_INSTALLS_PATH}/lib
-LIBS += -lcpr
+LIBS += -llibcurl
 
 win*{
 	QMAKE_CXXFLAGS += /MP /wd4251

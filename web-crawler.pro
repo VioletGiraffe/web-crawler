@@ -1,5 +1,6 @@
 TEMPLATE = subdirs
 
-SUBDIRS += crawler cpputils cpp-template-utils
+SUBDIRS += crawler libcurl-cpp cpputils cpp-template-utils
 
-crawler.depends = cpputils
+libcurl-cpp.depends = cpputils
+crawler.depends = cpputils libcurl-cpp
