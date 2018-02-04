@@ -7,3 +7,9 @@
 [submodule "libcurl-cpp"]
 	path = libcurl-cpp
 	url = https://github.com/VioletGiraffe/libcurl-cpp
+[submodule "myhtml"]
+	path = myhtml
+	url = https://github.com/VioletGiraffe/myhtml
+[submodule "myhtml-pp"]
+	path = myhtml-pp
+	url = https://github.com/VioletGiraffe/myhtml-pp

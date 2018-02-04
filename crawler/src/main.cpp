@@ -1,4 +1,7 @@
 #include "cwebdownloader.h"
+#include "cmyhtmlparser.h"
+#include "uri/UriParser.hpp"
+
 #include "assert/advanced_assert.h"
 #include "compiler/compiler_warnings_control.h"
 
@@ -13,8 +16,26 @@ int main(int argc, char* argv[])
 	});
 
 	CWebDownloader downloader;
+	const QByteArray content = downloader.download("https://curl.haxx.se/mail/lib-2005-10/0047.html");
 
-	const QString content = downloader.download("google.com");
+	CMyHtmlParser parser;
+	const auto& result = parser.parse(content);
+	for (const auto& tag : result)
+	{
+		if (tag.type == MyHTML_TAG_A)
+		{
+			const QString href = tag.attributeValue("href");
+			if (!href.isEmpty())
+			{
+				qDebug() << href;
+
+				std::string stdUrl = href.toStdString();
+				const http::url parsed = http::ParseHttpUrl(stdUrl);
+				qDebug() << "Host:" << QString::fromStdString(parsed.host);
+				qDebug() << "Path:" << QString::fromStdString(parsed.path);
+			}
+		}
+	}
 
 	return 0;
 }

@@ -35,9 +35,16 @@ INCLUDEPATH += \
 	../cpputils \
 	../cpp-template-utils \
 	../libcurl-cpp/src \
+	../myhtml/include \
+	../myhtml-pp/src \
+	../3rdparty \
 	$${VCPKG_INSTALLS_PATH}/include
 
-LIBS += -L../bin/$${OUTPUT_DIR} -lcurl_cpp -lcpputils
+LIBS += -L../bin/$${OUTPUT_DIR} -lmyhtmlpp -lcurl_cpp -lcpputils
+
+*msvc2015*:TOOLSET=v140
+*msvc2017*:TOOLSET=v141
+LIBS += -L../myhtml/bin/Windows/$${ARCHITECTURE}/$${TOOLSET} -lmyhtml_static
 
 Debug:LIBS += -L$${VCPKG_INSTALLS_PATH}/Debug/lib
 Release:LIBS += -L$${VCPKG_INSTALLS_PATH}/lib
@@ -52,6 +59,7 @@ win*{
 
 	Debug:QMAKE_LFLAGS += /INCREMENTAL
 	Release:QMAKE_LFLAGS += /OPT:REF /OPT:ICF
+	QMAKE_LFLAGS += /NODEFAULTLIB:MSVCRT
 }
 
 linux*|mac*{
