@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 	});
 
 	CWebDownloader downloader;
-	const QByteArray content = downloader.download("https://curl.haxx.se/mail/lib-2005-10/0047.html");
+	const QByteArray content = downloader.download("http://4pda.ru/forum/index.php?showtopic=837667&st=6000");
 
 	CMyHtmlParser parser;
 	const auto& result = parser.parse(content);
